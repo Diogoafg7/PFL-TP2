@@ -52,3 +52,35 @@ createEmptyState = []
 state2Str :: State -> String
 state2Str state = intercalate "," [var ++ "=" ++ show val | (var, val) <- sort state]  --after sorting the state list, iterate through the list and make the var = val with , separating them
 
+---------------PART2
+
+--------- COMPILER --------------
+
+-- Arithmetic expressions
+data Aexp
+    = Num Integer         -- a number
+    | Var String          -- a variable
+    | AddExp Aexp Aexp       -- addition
+    | SubExp Aexp Aexp       -- subtraction
+    | MultExp Aexp Aexp       -- multiplication
+    deriving Show
+
+-- Boolean expressions
+data Bexp
+    = Tru                 -- true
+    | Fals                 -- false
+    | Not Bexp            -- negation
+    | AndExp Bexp Bexp       -- logical and
+    | EquExp Aexp Aexp       -- equality
+    | LeExp Aexp Aexp        -- less than or equal to
+    deriving Show
+
+-- Statements
+data Stm
+    = Assign String Aexp  -- assignment
+    | NoopStm                -- do nothing
+    | If Bexp Stm Stm     -- if statement
+    | While Bexp Stm      -- while loop
+    deriving Show
+
+type Program = [Stm]
