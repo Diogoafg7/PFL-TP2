@@ -52,6 +52,32 @@ createEmptyState = []
 state2Str :: State -> String
 state2Str state = intercalate "," [var ++ "=" ++ show val | (var, val) <- sort state]  --after sorting the state list, iterate through the list and make the var = val with , separating them
 
+-- part2
+
+data Aexp =
+  ANum Integer |
+  AVar String |
+  AAdd Aexp Aexp |
+  AMult Aexp Aexp |
+  ASub Aexp Aexp
+  deriving Show
+
+data Bexp =
+  BTrue |
+  BFalse |
+  BEq Aexp Aexp |
+  BLe Aexp Aexp |
+  BNot Bexp |
+  BAnd Bexp Bexp
+  deriving Show
+
+data Stm =
+  Assign String Aexp |
+  If Bexp Stm Stm |
+  While Bexp Stm |
+  Seq [Stm]
+  deriving Show
+  
 -- --------------------------------------------------- compiler ->
 
 --run :: (Code, Stack, State) -> (Code, Stack, State)
