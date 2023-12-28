@@ -4,31 +4,46 @@
 -- Part 1
 
 -- Do not modify our definition of Inst and Code
+import Data.List (intercalate)
+import Data.List (sort)
+
 data Inst =
   Push Integer | Add | Mult | Sub | Tru | Fals | Equ | Le | And | Neg | Fetch String | Store String | Noop |
   Branch Code Code | Loop Code Code
   deriving Show
 type Code = [Inst]
 
--- createEmptyStack :: Stack
-createEmptyStack = undefined -- TODO, Uncomment the function signature after defining Stack
+data StackElement = IntElement Int | BoolElement Bool deriving (Show)
+type Stack = [StackElement]
 
--- stack2Str :: Stack -> String
-stack2Str = undefined -- TODO, Uncomment all the other function type declarations as you implement them
+type State = [(String, Integer)]
 
--- createEmptyState :: State
-createEmptyState = undefined -- TODO, Uncomment the function signature after defining State
+createEmptyStack :: Stack
+createEmptyStack = []
 
--- state2Str :: State -> String
-state2Str = undefined -- TODO
+stack2Str :: Stack -> String
+stack2Str stack = intercalate "," (map show (reverse stack))
 
--- run :: (Code, Stack, State) -> (Code, Stack, State)
-run = undefined -- TODO
+createEmptyState :: State
+createEmptyState = []
+
+state2Str :: State -> String
+state2Str state = intercalate "," [var ++ "=" ++ show val | (var, val) <- sort state]
+
+
+    
+run :: (Code, Stack, State) -> (Code, Stack, State)
+run ([], stack, state) = ([], stack, state)
+
+run(Add:rest, IntElement x:IntElement y:stack, state) = run( rest , IntElement (x+y):stack,state) -- if the stack is not empty add the first two elements
+run(Add:rest , _:_:stack, state) = error "The stack is empty" -- if the stack is empty print this error
+  
+
 
 -- To help you test your assembler
-testAssembler :: Code -> (String, String)
-testAssembler code = (stack2Str stack, state2Str state)
-  where (_,stack,state) = run(code, createEmptyStack, createEmptyState)
+--testAssembler :: Code -> (String, String)
+--testAssembler code = (stack2Str stack, state2Str state)
+  --where (_,stack,state) = run(code, createEmptyStack, createEmptyState)
 
 -- Examples:
 -- testAssembler [Push 10,Push 4,Push 3,Sub,Mult] == ("-10","")
@@ -52,21 +67,21 @@ testAssembler code = (stack2Str stack, state2Str state)
 -- TODO: Define the types Aexp, Bexp, Stm and Program
 
 -- compA :: Aexp -> Code
-compA = undefined -- TODO
-
--- compB :: Bexp -> Code
-compB = undefined -- TODO
-
--- compile :: Program -> Code
-compile = undefined -- TODO
-
--- parse :: String -> Program
-parse = undefined -- TODO
-
--- To help you test your parser
-testParser :: String -> (String, String)
-testParser programCode = (stack2Str stack, store2Str store)
-  where (_,stack,store) = run(compile (parse programCode), createEmptyStack, createEmptyStore)
+--compA = undefined -- TODO
+--
+---- compB :: Bexp -> Code
+--compB = undefined -- TODO
+--
+---- compile :: Program -> Code
+--compile = undefined -- TODO
+--
+---- parse :: String -> Program
+--parse = undefined -- TODO
+--
+---- To help you test your parser
+--testParser :: String -> (String, String)
+--testParser programCode = (stack2Str stack, store2Str store)
+ -- --where (_,stack,store) = run(compile (parse programCode), createEmptyStack, createEmptyStore)
 
 -- Examples:
 -- testParser "x := 5; x := x - 1;" == ("","x=4")
