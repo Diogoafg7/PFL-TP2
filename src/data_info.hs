@@ -11,9 +11,22 @@ import Data.List (intercalate)
 import Data.List (sort)
 
 data Inst =
-  Push Integer | Add | Mult | Sub | Tru | Fals | Equ | Le | And | Neg | Fetch String | Store String | Noop |
-  Branch Code Code | Loop Code Code
-  deriving Show
+    Push Integer
+    | Add 
+    | Mult 
+    | Sub 
+    | Tru 
+    | Fals 
+    | Equ 
+    | Le 
+    | And 
+    | Neg 
+    | Fetch String 
+    | Store String 
+    | Noop 
+    | Branch Code Code 
+    | Loop Code Code
+    deriving Show
 type Code = [Inst]
 
 data StackElement = Number Integer | TT | FF deriving (Show, Eq, Ord)
@@ -39,10 +52,10 @@ createEmptyState = []
 state2Str :: State -> String
 state2Str state = intercalate "," [var ++ "=" ++ show val | (var, val) <- sort state]  --after sorting the state list, iterate through the list and make the var = val with , separating them
 
+-- --------------------------------------------------- compiler ->
 
-
-run :: (Code, Stack, State) -> (Code, Stack, State)
-run ([], stack, state) = ([], stack, state)
+--run :: (Code, Stack, State) -> (Code, Stack, State)
+--run ([], stack, state) = ([], stack, state)
 
 
 --Arithmetic op 
@@ -155,16 +168,19 @@ initialState = []
 initialStack :: Stack
 initialStack = []
 
+
+-- nao precisamos ->
+
 -- Test the program
-main :: IO ()
-main = do
-  let (finalCode, finalStack, finalState) = run (exampleProgram, initialStack, initialState)
-  putStrLn "Final Code:"
-  print finalCode
-  putStrLn "Final Stack:"
-  print finalStack
-  putStrLn "Final State:"
-  print finalState
+--main :: IO ()
+--main = do
+--  let (finalCode, finalStack, finalState) = run (exampleProgram, initialStack, initialState)
+--  putStrLn "Final Code:"
+--  print finalCode
+--  putStrLn "Final Stack:"
+--  print finalStack
+--  putStrLn "Final State:"
+--  print finalState
 
 
 
