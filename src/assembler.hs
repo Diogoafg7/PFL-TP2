@@ -7,14 +7,21 @@ run :: (Code, Stack, State) -> (Code, Stack, State)
 run ([], stack, state) = ([], stack, state)
 
 --Arithmetic op 
-run (Add:code, Number v1:Number v2:stack, state) = run( code, Number (v1+v2):stack,state) -- if the stack is not empty and the top elements are numbers add the first two elements
-run (Add:code, _:_:stack, state) = error "Error.EmptyStack"
+run (Add:code, Number v1:Number v2:stack, state) = do --add the first two values if stack not empty
+    let newState = (code, (Number (v1+v2)):stack, state)
+    run newState
+run (Add:code, _:_:stack, state) = error "Run-time error.EmptyStack"
 
-run (Mult:code, Number v1:Number v2:stack, state) = run(code, Number (v1*v2):stack,state)
-run (Mult:code, _:_:stack, state) = error "Error.EmptyStack"
+run (Mult:code, Number v1:Number v2:stack, state) = do 
+    let newState = (code, (Number (v1*v2)):stack, state)
+    run newState
+run (Mult:code, _:_:stack, state) = error "Run-time error.EmptyStack"
 
-run (Sub:code, Number v1:Number v2:stack, state) = run(code, Number (v1-v2):stack,state)
-run (Sub:code, _:_:stack, state) = error "Error.EmptyStack"
+run (Sub:code, Number v1:Number v2:stack, state) = do 
+    let newState = (code, (Number (v1-v2)):stack, state)
+    run newState
+    
+run (Sub:code, _:_:stack, state) = error "Run-time error.EmptyStack"
 
 --boolean op
 run (Equ:code, v1:v2:stack, state) = do --puts true on top of the stack if the first 2 values are equal , else false
@@ -53,7 +60,7 @@ run (And:code, FF:FF:stack, state) = do
     let val = FF
     let newState = (code, val:stack, state)
     run newState
-run (And:code, Number i:stack, state) = error "Error. Not a truth value"
+run (And:code, Number i:stack, state) = error "Run-time error. Not a truth value"
 
 
 run (Neg:code, FF:stack, state) = do 
@@ -64,7 +71,7 @@ run (Neg:code, TT:stack, state) = do
     let val = FF
     let newState = (code, val:stack, state)
     run newState
-run (Neg:code, Number i:stack, state) = error "Error. Not a truth value"
+run (Neg:code, Number i:stack, state) = error "Run-time error. Not a truth value"
 
 
 
@@ -91,7 +98,7 @@ run ((Branch c1 c2):code, FF:stack, state) = do
     let newState = (c2 ++ code, stack, state)
     run newState
 
-run ((Branch c1 c2):code, Number i:stack, state) = error "Error. Not a truth value"
+run ((Branch c1 c2):code, Number i:stack, state) = error "Run-time error. Not a truth value"
 
 
 run (Loop c1 c2 : code, stack, state) = do
@@ -103,7 +110,6 @@ run (Loop c1 c2 : code, stack, state) = do
 run (Noop:code, stack, state) = do
     let newState = (code, stack, state)
     run newState
-run (code, stack, state) = error $ "Run-time error: Unhandled case for code " ++ show code ++ ", stack " ++ show stack ++ ", state " ++ show state
 
 -----------------------------------part2
 

@@ -50,7 +50,7 @@ createEmptyState :: State
 createEmptyState = []
 
 state2Str :: State -> String
-state2Str state = intercalate "," [var ++ "=" ++ show val | (var, val) <- sort state]  --after sorting the state list, iterate through the list and make the var = val with , separating them
+state2Str state = intercalate "," [var ++ "=" ++ stackElementValue val | (var, val) <- sort state]  --after sorting the state list, iterate through the list and make the var = val with , separating them
 
 --------------- PART2 -------------
 
