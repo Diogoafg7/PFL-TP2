@@ -66,8 +66,8 @@ compA (SubExp a1 a2) = compA a1 ++ compA a2 ++ [Sub]
 compA (MultExp a1 a2) = compA a1 ++ compA a2 ++ [Mult]
 
 compB :: Bexp -> Code
-compB Tru = [Tru]
-compB Fals = [Fals]
+compB Tr = [Tru]
+compB Fls = [Fals]
 compB (Not bexp) = compB bexp ++ [Neg]
 compB (AndExp b1 b2) = compB b1 ++ compB b2 ++ [And]
 compB (LeExp a1 a2) = compA a1 ++ compA a2 ++ [Le]
