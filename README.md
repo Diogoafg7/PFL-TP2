@@ -108,7 +108,7 @@ run (Add:code, _:_:stack, state) = error "Run-time error."
 - Implementa parsers para diferentes construções, como expressões aritméticas, booleanas, instruções if, instruções while e instruções de atribuição.
 - Usa uma abordagem recursiva para processar aninhamentos de código em instruções if e while.
 
-### Fluxo de Processamento:
+### Process Flow:
 
 - Começa com a função parseProgram, que analisa o código-fonte e direciona para análise específica com base nas construções encontradas (If Then Else, While Do, atribuição).
 - As funções parseIf e parseWhile dividem o código em segmentos relevantes, lidando com blocos de código dentro das instruções if e while.
