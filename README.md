@@ -15,13 +15,12 @@ de instruções (code) a executar, ``e`` é a  evaluation stack e ``s`` é a pil
 * Transferir a pasta do programa e exportar
 * Abrir um terminal, navegar até à pasta ``src`` e correr o comando ``ghci Main.hs`` 
 * Depois de abrir o ficheiro correr a função main através de ```:main```
-# Parte 1
-* Para a primeira parte do nosso projeto utilizamos e criamos os seguintes tipos com as suas respetivas funções:
 
 ## Código: 
 
 ## Parte 1
 
+###Code
 O tipo de dados **Inst** representa as instruções suportadas por esta linguagem. Inclui as seguintes instruções:
 
 ```Haskell
