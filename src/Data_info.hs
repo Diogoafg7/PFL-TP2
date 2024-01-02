@@ -58,8 +58,8 @@ state2Str state = intercalate "," [var ++ "=" ++ stackElementValue val | (var, v
 -- Arithmetic expressions
 
 data Aexp
-    = Num Integer        -- a number
-    | Var String         -- a variable
+    = Num Integer         -- a number
+    | Var String          -- a variable
     | AddA Aexp Aexp      -- addition
     | SubA Aexp Aexp      -- subtraction
     | MultA Aexp Aexp     -- multiplication
