@@ -10,18 +10,18 @@ run ([], stack, state) = ([], stack, state)
 run (Add:code, Number v1:Number v2:stack, state) = do --add the first two values if stack not empty
     let newState = (code, (Number (v1+v2)):stack, state)
     run newState
-run (Add:code, _:_:stack, state) = error "Run-time error.EmptyStack"
+run (Add:code, _:_:stack, state) = error "Run-time error."
 
 run (Mult:code, Number v1:Number v2:stack, state) = do 
     let newState = (code, (Number (v1*v2)):stack, state)
     run newState
-run (Mult:code, _:_:stack, state) = error "Run-time error.EmptyStack"
+run (Mult:code, _:_:stack, state) = error "Run-time error."
 
 run (Sub:code, Number v1:Number v2:stack, state) = do 
     let newState = (code, (Number (v1-v2)):stack, state)
     run newState
     
-run (Sub:code, _:_:stack, state) = error "Run-time error.EmptyStack"
+run (Sub:code, _:_:stack, state) = error "Run-time error."
 
 --boolean op
 run (Equ:code, v1:v2:stack, state) = do --puts true on top of the stack if the first 2 values are equal , else false
