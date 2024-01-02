@@ -20,7 +20,7 @@ de instruções (code) a executar, ``e`` é a  evaluation stack e ``s`` é a pil
 
 ## Parte 1
 
-###Code
+### Code
 O tipo de dados **Inst** representa as instruções suportadas por esta linguagem. Inclui as seguintes instruções:
 
 ```Haskell
