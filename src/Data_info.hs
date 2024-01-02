@@ -7,8 +7,9 @@
 module Data_info where
 
 import Prelude
-import Data.List (intercalate)
-import Data.List (sort)
+import qualified Data.Map.Strict as HashMap
+import Data.List (intercalate, sort)
+import Data.Map (toList)
 
 data Inst =
     Push Integer
@@ -57,31 +58,33 @@ state2Str state = intercalate "," [var ++ "=" ++ stackElementValue val | (var, v
 -- Arithmetic expressions
 
 data Aexp
-    = Num Integer         -- a number
-    | Var String          -- a variable
-    | AddExp Aexp Aexp       -- addition
-    | SubExp Aexp Aexp       -- subtraction
-    | MultExp Aexp Aexp       -- multiplication
+    = Num Integer        -- a number
+    | Var String         -- a variable
+    | AddA Aexp Aexp      -- addition
+    | SubA Aexp Aexp      -- subtraction
+    | MultA Aexp Aexp     -- multiplication
     deriving Show
 
 -- Boolean expressions
 
 data Bexp
-    = Tr                 -- true
-    | Fls                 -- false
-    | Not Bexp            -- negation
-    | AndExp Bexp Bexp       -- logical and
-    | EquExp Aexp Aexp       -- equality
-    | LeExp Aexp Aexp        -- less than or equal to
+    = TrueB               -- true
+    | FalseB              -- false
+    | NotB Bexp           -- negation
+    | AndB Bexp Bexp      -- logical AND
+    | EqualBB Bexp Bexp   -- boolean equality
+    | LessB Aexp Aexp     -- less than or equal to
+    | EqualAB Aexp Aexp   -- arithmetic equality
     deriving Show
+
 
 -- Statements
 
 data Stm
-    = Assign String Aexp  -- assignment
-    | NoopStm                -- do nothing
-    | If Bexp Stm Stm     -- if statement
-    | While Bexp Stm      -- while loop
+    = Assign String Aexp          -- assignment
+    | If Bexp Program Program     -- if statement
+    | While Bexp Program          -- while loop
     deriving Show
 
 type Program = [Stm]
+type Parser a = [String] -> (a)

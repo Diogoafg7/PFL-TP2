@@ -110,26 +110,3 @@ run (Loop c1 c2 : code, stack, state) = do
 run (Noop:code, stack, state) = do
     let newState = (code, stack, state)
     run newState
-
------------------------------------part2
-
-assembleAexp :: Aexp -> Code
-assembleAexp (Num n) = [Push n]
-assembleAexp (Var var) = [Fetch var]
-assembleAexp (AddExp e1 e2) = assembleAexp e1 ++ assembleAexp e2 ++ [Add]
-assembleAexp (MultExp e1 e2) = assembleAexp e1 ++ assembleAexp e2 ++ [Mult]
-assembleAexp (SubExp e1 e2) = assembleAexp e1 ++ assembleAexp e2 ++ [Sub]
-
-assembleBexp :: Bexp -> Code
-assembleBexp Tr = [Tru]
-assembleBexp Fls = [Fals]
-assembleBexp (EquExp e1 e2) = assembleAexp e1 ++ assembleAexp e2 ++ [Equ]
-assembleBexp (LeExp e1 e2) = assembleAexp e1 ++ assembleAexp e2 ++ [Le]
-assembleBexp (Not b) = assembleBexp b ++ [Neg]
-assembleBexp (AndExp b1 b2) = assembleBexp b1 ++ assembleBexp b2 ++ [And]
-
-assembleStm :: Stm -> Code
-assembleStm (Assign var aexp) = assembleAexp aexp ++ [Store var]
-assembleStm (If bexp stm1 stm2) = assembleBexp bexp ++ [Branch (assembleStm stm1) (assembleStm stm2)]
-assembleStm (While bexp stm) = assembleBexp bexp ++ [Loop (assembleStm stm) [Noop]]
-
